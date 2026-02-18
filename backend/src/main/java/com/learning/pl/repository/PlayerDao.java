@@ -4,6 +4,7 @@ import com.learning.pl.domain.model.Player;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -36,4 +37,15 @@ public interface PlayerDao extends JpaRepository<Player, Integer> {
     @Query("SELECT DISTINCT unnest(string_to_array(p.pos, ',')) FROM Player p")
     List<String> findAllPositions();
 
+    @Modifying
+    @Query(value = """
+            INSERT INTO prem_data(player_name, nation, pos, age, matches_played, starts,
+            minutes_played, goals, assists, penalties_scored, yellow_cards,
+            red_cards, expected_goals, expected_assists, team_name)
+            SELECT player_name, nation, pos, age, matches_played, starts,
+            minutes_played, goals, assists, penalties_scored, yellow_cards,
+            red_cards, expected_goals, expected_assists, team_name
+            FROM prem_data_backup
+            """, nativeQuery = true)
+    void restoreFromBackup();
 }
