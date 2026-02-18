@@ -4,11 +4,12 @@ import { PlayerDto } from '../models/playerDto.model';
 import { Observable } from 'rxjs';
 import { Page } from '../models/page.type';
 import { PlayerSearchParams } from '../models/filter.type';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class PlayerService {
-  private baseUrl = 'http://localhost:8080/api/v1/players';
+  private baseUrl = `${environment.apiUrl}/api/v1/players`;
   private teams = '/teams';
   private nations = '/nations';
   private positions = '/positions';
