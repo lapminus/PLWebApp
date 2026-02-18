@@ -1,0 +1,28 @@
+@let p = player();
+@if (isLoading()) {
+<p>Loading...</p>
+}
+@else if (hasError()) {
+<p>Some error has occured.</p>
+}
+@else if (p === null) {
+<app-shared-no-results-found [receivedQuery]="sendingQuery()" />
+}
+@else {
+<div class="d-flex justify-content-center">
+    <div class="card w-50">
+        <div class="card-body">
+            <h3 class="card-title d-flex justify-content-center">{{p.playerName || '-'}}</h3>
+        </div>
+        <ul class="list-group list-group-flush fs-5">
+            @for (item of p | keyvalue; track item.key) {
+            @if (!excludeFields.includes(item.key)) {
+            <li class="list-group-item py-3">{{ item.key }}: {{ item.value || '-' }}</li>
+            }
+            }
+        </ul>
+        <div class="card-body">
+        </div>
+    </div>
+</div>
+}

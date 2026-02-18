@@ -1,0 +1,22 @@
+<div class="d-flex flex-wrap justify-content-center mt-3">
+    <div class="d-flex flex-wrap players-grid">
+        @for (player of receivedPlayers(); track player.id) {
+        <div class="player-card-wrapper position-relative m-2">
+            <a [routerLink]="['/player', player.id]" class="card player-card text-decoration-none text-dark"
+                [ngClass]="player.pos ? player.pos.toLowerCase() : 'unknown-pos'">
+                <div class="card-body">
+                    <h5 class="card-title">{{ player.playerName || '-' }}</h5>
+                    <p class="card-text">Plays for {{ player.teamName || '-' }}</p>
+                    <p class="card-text">Nation: {{ player.nation || '-' }}</p>
+                    <p class="card-text">Position: {{ player.pos || '-' }}</p>
+                </div>
+                <div class="hover-overlay d-flex justify-content-center align-items-center">
+                    <span>More Stats</span>
+                </div>
+            </a>
+            <button class="edit-btn" (click)="clickedEdit(player.id)">E</button>
+            <button class="delete-btn" (click)="clickedDelete(player.id)">X</button>
+        </div>
+        }
+    </div>
+</div>

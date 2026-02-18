@@ -1,0 +1,38 @@
+.team-card {
+  border: none;
+  background-color: transparent;
+  width: 20%;
+  height: auto;
+  transition: transform 0.2s;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 2rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    border-radius: 0.75rem;
+
+    .card-title {
+      text-shadow:
+        0 1px 2px rgba(0, 0, 0, 1),
+        0 2px 6px rgba(0, 0, 0, 1),
+        0 0 10px rgba(0, 0, 0, 1);
+    }
+  }
+
+  &:hover .hover-overlay {
+    opacity: 1;
+  }
+}

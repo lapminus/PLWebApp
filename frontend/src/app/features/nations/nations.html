@@ -1,0 +1,16 @@
+<app-shared-search (searchSubmitted)="receiveSearch($event)" [receivedPlaceholder]="sendingPlaceholder()" />
+
+@if (filteredBySearch().length === 0 && sendingQuery()) {
+<app-shared-no-results-found [receivedQuery]="sendingQuery()" />
+} @else {
+<div class="d-flex flex-wrap justify-content-center mt-3">
+    @for (nation of filteredBySearch(); track nation) {
+    <a [routerLink]="['/nation', nation]" class="card team-card text-decoration-none text-dark m-2">
+        <img class="flag" [src]="getFlagUrl(nation)" alt="">
+        <div class="hover-overlay d-flex justify-content-center align-items-center">
+            <span class="card-title">{{nation}}</span>
+        </div>
+    </a>
+    }
+</div>
+}

@@ -1,0 +1,132 @@
+<button class="btn btn-primary" (click)="openCreatePlayerModal()">
+    + Create Player
+</button>
+
+@if (isModalOpen()) {
+<div class="modal fade show">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{receivedEditedId() !== -1 ? "Edit" : "Create"}} Player</h5>
+                <button class="btn-close" (click)="closeCreatePlayerModal()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input class="form-control" [(ngModel)]="newPlayer.playerName" name="playerName"
+                        [class.is-invalid]="formErrors()['playerName']">
+                    <div class="invalid-feedback">{{formErrors()['playerName']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Team Name</label>
+                    <input class="form-control" [(ngModel)]="newPlayer.teamName" name="teamName"
+                        [class.is-invalid]="formErrors()['teamName']">
+                    <div class="invalid-feedback">{{formErrors()['teamName']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nation</label>
+                    <select class="form-select" [(ngModel)]="newPlayer.nation" name="nation">
+                        <option value="" disabled selected>Select a nation</option>
+                        @for (nation of nations(); track nation) {
+                        <option [value]="nation">
+                            {{ nation.split(' ')[1] }}
+                        </option>
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        {{ formErrors()['nation'] }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Position</label>
+                    @for (pos of positions; track pos) {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="pos-{{pos}}"
+                            [checked]="isPositionSelected(pos)" (click)="togglePosition(pos)">
+                        <label class="form-check-label" for="pos-{{pos}}">{{ pos }}</label>
+                    </div>
+                    }
+                    <div class="invalid-feedback">{{formErrors()['pos']}}</div>
+                </div>
+
+                <div class="mb-3 d-flex align-items-center justify-content-center" style="cursor: pointer;"
+                    (click)="toggleMoreStats()">
+                    <span class="fw-bold">More Stats</span>
+                    <span>
+                        <i class="bi" [ngClass]="showMoreStats() ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+                    </span>
+                </div>
+                @if (showMoreStats()) {
+                <div class="mb-3">
+                    <label class="form-label">Age</label>
+                    <input class="form-control" type="number" [(ngModel)]="newPlayer.age" name="age"
+                        [class.is-invalid]="formErrors()['age']">
+                    <div class="invalid-feedback">{{formErrors()['age']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Assists</label>
+                    <input class="form-control" type="number" [(ngModel)]="newPlayer.assists" name="assists"
+                        [class.is-invalid]="formErrors()['assists']">
+                    <div class="invalid-feedback">{{formErrors()['assists']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Expected Assists</label>
+                    <input class="form-control" type="number" steps="0.01" [(ngModel)]="newPlayer.expectedAssists"
+                        name="expectedAssists" [class.is-invalid]="formErrors()['expectedAssists']">
+                    <div class="invalid-feedback">{{formErrors()['expectedAssists']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Goals</label>
+                    <input class="form-control" type="number" step="0.1" [(ngModel)]="newPlayer.goals" name="goals"
+                        [class.is-invalid]="formErrors()['goals']">
+                    <div class="invalid-feedback">{{formErrors()['goals']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Expected Goals</label>
+                    <input class="form-control" type="number" steps="0.01" [(ngModel)]="newPlayer.expectedGoals"
+                        name="expectedGoals" [class.is-invalid]="formErrors()['expectedGoals']">
+                    <div class="invalid-feedback">{{formErrors()['expectedGoals']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Starts</label>
+                    <input class="form-control" type="number" [(ngModel)]="newPlayer.starts" name="starts"
+                        [class.is-invalid]="formErrors()['starts']">
+                    <div class="invalid-feedback">{{formErrors()['starts']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Matches Played</label>
+                    <input class="form-control" type="number" [(ngModel)]="newPlayer.matchesPlayed" name="matchesPlayed"
+                        [class.is-invalid]="formErrors()['matchesPlayed']">
+                    <div class="invalid-feedback">{{formErrors()['matchesPlayed']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Minutes Played</label>
+                    <input class="form-control" type="number" [(ngModel)]="newPlayer.minutesPlayed" name="minutesPlayed"
+                        [class.is-invalid]="formErrors()['minutesPlayed']">
+                    <div class="invalid-feedback">{{formErrors()['minutesPlayed']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Penalties Scored</label>
+                    <input class="form-control" type="number" [(ngModel)]="newPlayer.penaltiesScored"
+                        name="penaltiesScored" [class.is-invalid]="formErrors()['penaltiesScored']">
+                    <div class="invalid-feedback">{{formErrors()['penaltiesScored']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Red Cards</label>
+                    <input class="form-control" type="number" [(ngModel)]="newPlayer.redCards" name="redCards"
+                        [class.is-invalid]="formErrors()['redCards']">
+                    <div class="invalid-feedback">{{formErrors()['redCards']}}</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Yellow Cards</label>
+                    <input class="form-control" type="number" [(ngModel)]="newPlayer.yellowCards" name="yellowCards"
+                        [class.is-invalid]="formErrors()['yellowCards']">
+                    <div class="invalid-feedback">{{formErrors()['yellowCards']}}</div>
+                </div>
+                }
+                <button class="btn btn-success" (click)="submitPlayer()">{{receivedEditedId() !== -1 ? "Save" : "Create"}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+}

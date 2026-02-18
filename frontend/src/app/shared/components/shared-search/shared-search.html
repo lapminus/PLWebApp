@@ -1,0 +1,8 @@
+<form class="d-flex justify-content-center" (ngSubmit)="submitSearch()">
+    <input class="form-control search-bar" [(ngModel)]="searchQuery" name="query" type="text"
+        [placeholder]="receivedPlaceholder()" />
+
+    <button class="btn btn-outline-success" type="submit">
+        Search
+    </button>
+</form>
