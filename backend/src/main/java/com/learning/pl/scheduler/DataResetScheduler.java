@@ -13,7 +13,7 @@ public class DataResetScheduler {
         this.playerDao = playerDao;
     }
 
-    @Scheduled(fixedRate = 360000)
+    @Scheduled(fixedRate = 86400000)
     @Transactional
     public void resetData() {
         System.out.println("Resetting data...");
